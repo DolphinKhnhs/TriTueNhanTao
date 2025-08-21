@@ -11,7 +11,7 @@ def Create_Label(main):
     ]
     for text, y in labels:
         Label(main, text=text, font=("Arial", 10, "bold")).place(x=10,y=y)
-
+# Máy suy luận
 def SuyLuan():
     if KiemTra1.get(): 
       return "Nên đi học!"
@@ -46,7 +46,7 @@ KiemTra1    = BooleanVar()
 KiemTra2    = BooleanVar()
 SoBuoiVang1  = BooleanVar()
 SoBuoiVang2  = BooleanVar()
-
+#Cơ sở tri thức
 cb = [
     ("Đẹp", 200, 40, ThoiTiet1, ThoiTiet2),
     ("Xấu", 350, 40, ThoiTiet2, ThoiTiet1),
