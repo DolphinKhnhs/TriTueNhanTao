@@ -1,12 +1,13 @@
-from UI import UI
-from Algorithm import Algorithm
-import tkinter as tk
+from GUI import GUI
+app = GUI()
+app.run()
 
 
-window = tk.Tk()
-target= Algorithm.create_target()
-UI(window, Algorithm, target)
-UI.drawtable(UI.canvas_right(window), target)
-window.mainloop()
+
+
+
+
+
+
 
 
