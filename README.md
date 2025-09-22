@@ -19,9 +19,9 @@
 chạy chương trình: main.py
 Chọn thuật toán trên giao diện.
 
-Kết quả
+##Kết quả
 Hiển thị bước di chuyển quân Rooks.
 
-Tác giả
+##Tác giả
 Nguyễn Khánh
 Ngày nộp: 22/09/2025
