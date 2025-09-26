@@ -224,6 +224,18 @@ class Algorithm:
                         temp_state[row][i] = 1
                         temp_tuple = tuple(map(tuple, temp_state))
 
+                        def goal_test(self, state, target):
+                            return state == target
+
+                        def copy_matrix(self, matrix):
+                            return [[matrix[i][j] for j in range(N)] for i in range(N)]
+
+                        def valid(self, matrix, row, col):
+                            for i in range(row):
+                                if matrix[i][col] == 1:
+                                    return False
+                            return True
+
                         g_new = g + 1  # mỗi bước đặt 1 quân = chi phí 1
                         h_new = self.manhattan_heuristic(temp_state, target)
                         f_new = g_new + h_new
@@ -233,15 +245,6 @@ class Algorithm:
 
         return None
 
-    def goal_test(self, state, target):
-        return state == target
-    def copy_matrix(self, matrix):
-        return [[matrix[i][j] for j in range(N)] for i in range(N)]
-    def valid(self, matrix, row, col):
-        for i in range(row):
-            if matrix[i][col] == 1:
-                return False
-        return True
 
 
 

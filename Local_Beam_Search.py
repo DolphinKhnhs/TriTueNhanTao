@@ -33,8 +33,8 @@ class LOCAL_BEAM_SEARCH:
             for c in range(N):
                 if c != cur_col:
                     new_state = [row[:] for row in state]
-                    new_state[r][cur_col] = 0   # xóa quân cũ
-                    new_state[r][c] = 1        # đặt quân mới
+                    new_state[r][cur_col] = 0
+                    new_state[r][c] = 1
                     neighbors.append(new_state)
         return neighbors
 

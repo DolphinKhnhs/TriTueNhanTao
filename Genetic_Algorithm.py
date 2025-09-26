@@ -57,7 +57,6 @@ class GENETIC_ALGORITHM:
         for gen in range(self.max_gen):
 
             if best == self.target:
-                print(f"Found solution at generation {gen}")
                 return best, path
 
             new_population = []
@@ -72,7 +71,6 @@ class GENETIC_ALGORITHM:
             best = min(population, key=self.fitness)
             path.append(best)
 
-        print("Best found (not exact):")
         return best, path
 
 def run_genetic_algorithm(target):
