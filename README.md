@@ -1,4 +1,4 @@
-##Thông tin cá nhân
+## Thông tin cá nhân  
 Họ và tên: Nguyễn Khánh  
 MSSV: 23110112  
 Em xin phép nộp bài tập tuần 6 buổi 2  
