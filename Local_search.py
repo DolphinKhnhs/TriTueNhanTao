@@ -82,6 +82,7 @@ class LocalSearch:
             cost_curr = self.manhattan_distance_rooks(state)
             if cost_curr == 0:
                 break
+
             neighbors = []
             for r in range(self.N):
                 cur_col = state[r].index(1)
@@ -92,11 +93,15 @@ class LocalSearch:
                         new_state[r][c] = 1
                         neighbors.append(new_state)
             self.nodes_expanded += len(neighbors)
+
             next_state = min(neighbors, key=self.manhattan_distance_rooks)
-            delta = self.manhattan_distance_rooks(next_state) - cost_curr
+            next_cost = self.manhattan_distance_rooks(next_state)
+            delta = next_cost - cost_curr
+
             if delta <= 0 or random.random() < math.exp(-delta / t):
                 state = next_state
                 path.append(state)
+
             t *= alpha
 
         elapsed_time = time.time() - start_time

@@ -1,34 +1,50 @@
 import tkinter as tk
 from tkinter import ttk
-from  tkinter import messagebox
+from tkinter import messagebox
 import random
 import Uninformed_search
 import matplotlib.pyplot as plt
 import Informed_search
-import  Local_search
+import Local_search
+from CSP import Backtracking, Forward_checking, AC3RooksSolver
+from complex_env import AND_OR_Search, Belief_State_Search, Partially_Observable_Search
 
 N = 8
 CELL_SIZE = 30
 
+
 class EightRooks_GUI:
     def __init__(self, window):
+        # KHỞI TẠO result với giá trị mặc định
+        self.result = {
+            "nodes_expanded": 0,
+            "max_frontier_size": 0,
+            "time": 0.0,
+            "path": [],
+            "solution": None,
+            "success": False
+        }
+
         self.window = window
         self.window.title("8 Rooks")
         self.window.geometry(f"{window.winfo_screenwidth()}x{window.winfo_screenheight()}")
         self.window.resizable(True, True)
-#Canh lề frame
+
+        # Canh lề frame
         for i in range(4):
             self.window.grid_columnconfigure(i, weight=0)
         for i in range(4):
             self.window.grid_rowconfigure(i, weight=0)
-########Variable#######
+
+        ########Variable#######
         self.target = self.create_target()
         self.algo_var = tk.StringVar()
         self.algo_var.set("BFS")
         self.algo_chart = tk.StringVar()
         self.algo_chart.set("Uninformed search")
         self.category = tk.StringVar()
-        self.category.set(None)
+        self.category.set("Select Algorithm")
+
         # Thông tin thuật toán
         self.nodes_expanded = 0
         self.max_frontier_size = 0
@@ -37,64 +53,49 @@ class EightRooks_GUI:
         self.heuristic_value = 0
         self.cost_value = 0
         self.total_cost_value = 0
-        #Kiểm soát bước hiển thị
+
+        # Kiểm soát bước hiển thị
         self.current_step = 0
         self.total_steps = 0
         self.running = False
         self.run_delay_ms = 400
-        #Bảng thông số
+
+        # Bảng thông số
         self.stats_table = None
 
-        #dict lưu dữ liệu vẽ biểu đồ
+        # dict lưu dữ liệu vẽ biểu đồ
         self.algo_stats = {
             "Uninformed search": {
-                "BFS": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                        "time": self.time},
-                "DFS": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                        "time": self.time},
-                "UCS": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                        "time": self.time},
-                "DLS": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                        "time": self.time},
-                "IDS": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                        "time": self.time}
+                "BFS": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "DFS": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "UCS": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "DLS": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "IDS": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0}
             },
             "Informed search": {
-                "A*": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                       "time": self.time},
-                "Greedy": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                           "time": self.time}
+                "A*": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Greedy": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0}
             },
             "Local search": {
-                "Hill Climbing": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                                  "time": self.time},
-                "Simulated Annealing": {"nodes_expanded": self.nodes_expanded,
-                                        "max_frontier_size": self.max_frontier_size, "time": self.time},
-                "Genetic Algorithm": {"nodes_expanded": self.nodes_expanded,
-                                      "max_frontier_size": self.max_frontier_size, "time": self.time},
-                "Beam Search": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                                "time": self.time}
+                "Hill Climbing": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Simulated Annealing": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Genetic Algorithm": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Beam Search": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0}
             },
             "CSP Algorithms": {
-                "Backtracking": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                                 "time": self.time},
-                "Forward Checking": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                                     "time": self.time},
-                "AC-3": {"nodes_expanded": self.nodes_expanded, "max_frontier_size": self.max_frontier_size,
-                         "time": self.time}
+                "Backtracking": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Forward Checking": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "AC-3": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0}
             },
             "Complex Environment": {
-                "AND-OR Tree Search": {"nodes_expanded": self.nodes_expanded,
-                                       "max_frontier_size": self.max_frontier_size, "time": self.time},
-                "Partially Observable Search": {"nodes_expanded": self.nodes_expanded,
-                                                "max_frontier_size": self.max_frontier_size, "time": self.time},
-                "Belief State Search": {"nodes_expanded": self.nodes_expanded,
-                                        "max_frontier_size": self.max_frontier_size, "time": self.time}
+                "AND-OR Tree Search": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Partially Observable Search": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0},
+                "Belief State Search": {"nodes_expanded": 0, "max_frontier_size": 0, "time": 0}
             }
         }
 
-########Frame#########
-#Bàn cờ và hiển thi các bước đặt quân cờ
+        ########Frame#########
+        # Bàn cờ và hiển thi các bước đặt quân cờ
         self.frame_target_state = tk.LabelFrame(window, text="Rooks board", font=("Arial", 8, "bold"))
         self.frame_target_state.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
 
@@ -104,7 +105,7 @@ class EightRooks_GUI:
         self.frame_controls = tk.Frame(window)
         self.frame_controls.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
 
-#Lựa chọn thuật toán và hiển thị kết quả
+        # Lựa chọn thuật toán và hiển thị kết quả
         self.frame_algo = tk.LabelFrame(window, text="Algorithm Selection", font=("Arial", 8, 'bold'))
         self.frame_algo.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
 
@@ -113,33 +114,35 @@ class EightRooks_GUI:
 
         self.frame_button = tk.Frame(window)
         self.frame_button.grid(row=2, column=1, padx=5, pady=5, sticky="nsew")
-#Frame vẽ biểu đồ thông số
-        self.frame_chart = tk.LabelFrame(window, text="Chart", font=('Arial',8,'bold'))
-        self.frame_chart.grid(row=0, column=2,rowspan=2, pady=5, padx=5, sticky="nsew")
-########Label########
+
+        # Frame vẽ biểu đồ thông số
+        self.frame_chart = tk.LabelFrame(window, text="Chart", font=('Arial', 8, 'bold'))
+        self.frame_chart.grid(row=0, column=2, rowspan=2, pady=5, padx=5, sticky="nsew")
+
+        ########Label########
         self.label_target_state = tk.Label(self.frame_target_state, text="Target state", font=("Arial", 10, "bold"))
         self.label_target_state.pack(pady=(5, 0))
-        self.label_pos_target_state = tk.Label(self.frame_target_state, text="Position: None", font=("Arial", 10, "bold"),
+        self.label_pos_target_state = tk.Label(self.frame_target_state, text="Position: None",
+                                               font=("Arial", 10, "bold"),
                                                justify='left', wraplength=200)
-        self.label_pos_target_state.pack(pady=(0,5))
+        self.label_pos_target_state.pack(pady=(0, 5))
         self.label_pos_step = tk.Label(self.frame_step, text="Position: None",
                                        font=("Arial", 10, "bold"),
                                        justify='left', wraplength=200)
         self.label_pos_step.pack(pady=(0, 5))
 
-########Cavas########
-
-        self.canvas_target_state = tk.Canvas(self.frame_target_state, width=N*CELL_SIZE, height=N*CELL_SIZE)
+        ########Cavas########
+        self.canvas_target_state = tk.Canvas(self.frame_target_state, width=N * CELL_SIZE, height=N * CELL_SIZE)
         self.canvas_target_state.pack()
 
-        self.canvas_step = tk.Canvas(self.frame_step, width=N*CELL_SIZE, height=N*CELL_SIZE)
+        self.canvas_step = tk.Canvas(self.frame_step, width=N * CELL_SIZE, height=N * CELL_SIZE)
         self.canvas_step.pack()
 
-#######Gọi hàm#######
+        #######Gọi hàm#######
         self.draw_ui()
 
-#Hàm trung gian gọi các hàm khác
-#Vẽ giao diện
+    # Hàm trung gian gọi các hàm khác
+    # Vẽ giao diện
     def draw_ui(self):
         self.draw_chessboard(self.canvas_target_state)
         self.draw_rooks(self.canvas_target_state, self.target)
@@ -150,18 +153,16 @@ class EightRooks_GUI:
         self.create_result_frame()
         self.create_select_algo_chart()
 
-    #Tạo nút
+    # Tạo nút
     def create_button(self):
-        # Nhớ add chức năng button
         actions1 = [
             ("Shuffle", self.shuffle),
             ("Solve", self.solve),
             ("Run", self.run_solution),
             ("Stop", self.stop_solution),
             ("Reset", self.reset),
-            ("Show All Steps", self.show_all_steps)
         ]
-        for i, (txt,cmd) in enumerate(actions1):
+        for i, (txt, cmd) in enumerate(actions1):
             tk.Button(self.frame_button, text=txt, width=(12 if i == 5 else 8), font=("Arial", 12),
                       command=cmd).grid(row=0, column=i, padx=3, pady=3)
 
@@ -177,7 +178,8 @@ class EightRooks_GUI:
                 self.label_step = tk.Label(self.frame_controls, text=txt, width=8, font=("Arial", 12))
                 self.label_step.grid(row=0, column=i, padx=3, pady=3)
             else:
-                tk.Button(self.frame_controls, text=txt, width=8, font=("Arial", 12), command=cmd).grid(row=0, column=i, padx=3, pady=3)
+                tk.Button(self.frame_controls, text=txt, width=8, font=("Arial", 12), command=cmd).grid(row=0, column=i,
+                                                                                                        padx=3, pady=3)
 
     def create_algo_widgets(self):
         # --- Hai khung trái/phải ---
@@ -218,8 +220,9 @@ class EightRooks_GUI:
         frame_algo_select.pack(side="left", anchor="n", padx=5, pady=5)
         algo_groups = ["Uninformed search", "Informed search", "Local search", "CSP Algorithms", "Complex Environment"]
         for algo in algo_groups:
-            tk.Radiobutton(frame_algo_select,text=algo,variable=self.algo_chart,value=algo).pack(anchor="w")
-        button_algo_selected = tk.Button(frame_algo_select, text="View chart", font=('Arial',8,'bold'), command=self.draw_chart)
+            tk.Radiobutton(frame_algo_select, text=algo, variable=self.algo_chart, value=algo).pack(anchor="w")
+        button_algo_selected = tk.Button(frame_algo_select, text="View chart", font=('Arial', 8, 'bold'),
+                                         command=self.draw_chart)
         button_algo_selected.pack()
 
     def draw_chart(self):
@@ -303,18 +306,18 @@ class EightRooks_GUI:
         self.stats_table.grid(row=0, column=0, sticky="nsew")
         scrollbar.grid(row=0, column=1, sticky="ns")
 
-
-#Các hàm chức năng
-#Vẽ bàn cờ
+    # Các hàm chức năng
+    # Vẽ bàn cờ
     def draw_chessboard(self, canvas):
         canvas.delete("board")
         for i in range(N):
             for j in range(N):
-                color = "#cccbc8" if (i+j)%2==0 else "#a8a7a5"
-                x1, y1 = j*CELL_SIZE, i*CELL_SIZE
+                color = "#cccbc8" if (i + j) % 2 == 0 else "#a8a7a5"
+                x1, y1 = j * CELL_SIZE, i * CELL_SIZE
                 x2, y2 = x1 + CELL_SIZE, y1 + CELL_SIZE
                 canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="", tags="board")
-#vẽ quân xe
+
+    # vẽ quân xe
     def draw_rooks(self, canvas, board):
         canvas.delete("rook")
         for i in range(N):
@@ -324,7 +327,7 @@ class EightRooks_GUI:
                     y = i * CELL_SIZE + CELL_SIZE // 2
                     canvas.create_text(x, y, text="♖", font=("Arial", 20, "bold"), fill="red", tags="rook")
 
-#Tạo trạng thái mục tiêu
+    # Tạo trạng thái mục tiêu
     def create_target(self):
         matrix = [[0] * N for _ in range(N)]
         cols = list(range(N))
@@ -333,58 +336,178 @@ class EightRooks_GUI:
             matrix[i][c] = 1
         return matrix
 
-#Trộn vị trí quân xe
+    # Trộn vị trí quân xe
     def shuffle(self):
-        self.target=self.create_target()
+        self.target = self.create_target()
         self.draw_rooks(self.canvas_target_state, self.target)
         self.update_pos_info()
 
-#Giải thuật toán
+    # Giải thuật toán - ĐÃ SỬA LỖI
     def solve(self):
         selected = self.algo_var.get()
-        if selected == "BFS":
-            self.result = Uninformed_search.bfs_rooks(self.target)
-            self.category.set("Uninformed search")
-        if selected == "DFS":
-            self.result = Uninformed_search.dfs_rooks(self.target)
-            self.category.set("Uninformed search")
-        if selected == "UCS":
-            self.result = Uninformed_search.ucs_rooks(self.target)
-            self.category.set("Uninformed search")
-        if selected == "DLS":
-            self.result = Uninformed_search.dls_rooks(self.target)
-            self.category.set("Uninformed search")
-        if selected == "IDS":
-            self.result = Uninformed_search.ids_rooks(self.target)
-            self.category.set("Uninformed search")
-        if selected == "A*":
-            self.result = Informed_search.a_star_rooks(self.target)
-            self.category.set("Informed search")
-        if selected == "Greedy":
-            self.result = Informed_search.greedy_rooks(self.target)
-            self.category.set("Informed search")
-        if selected == "Hill Climbing":
-            local_search = Local_search.LocalSearch(self.target)
-            self.result = local_search.hill_climbing_rooks()
-            self.category.set("Local search")
-        if selected == "Simulated Annealing":
-            local_search = Local_search.LocalSearch(self.target)
-            self.result = local_search.simulated_annealing_rooks()
-            self.category.set("Local search")
-        if selected == "Genetic Algorithm":
-            local_search = Local_search.LocalSearch(self.target)
-            self.result = local_search.genetic_algorithm_rooks()
-            self.category.set("Local search")
-        if selected == "Beam Search":
-            local_search = Local_search.LocalSearch(self.target)
-            self.result = local_search.beam_search_rooks()
-            self.category.set("Local search")
 
+        # LUÔN đảm bảo self.result có giá trị hợp lệ
+        self.result = {
+            "nodes_expanded": 0,
+            "max_frontier_size": 0,
+            "time": 0.0,
+            "path": [],
+            "solution": None,
+            "success": False
+        }
+
+        try:
+            if selected == "BFS":
+                result_temp = Uninformed_search.bfs_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Uninformed search")
+
+            elif selected == "DFS":
+                result_temp = Uninformed_search.dfs_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Uninformed search")
+
+            elif selected == "UCS":
+                result_temp = Uninformed_search.ucs_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Uninformed search")
+
+            elif selected == "DLS":
+                result_temp = Uninformed_search.dls_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Uninformed search")
+
+            elif selected == "IDS":
+                result_temp = Uninformed_search.ids_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Uninformed search")
+
+            elif selected == "A*":
+                result_temp = Informed_search.a_star_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Informed search")
+
+            elif selected == "Greedy":
+                result_temp = Informed_search.greedy_rooks(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Informed search")
+
+            elif selected == "Hill Climbing":
+                local_search = Local_search.LocalSearch(self.target)
+                result_temp = local_search.hill_climbing_rooks()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Local search")
+
+            elif selected == "Simulated Annealing":
+                local_search = Local_search.LocalSearch(self.target)
+                result_temp = local_search.simulated_annealing_rooks()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Local search")
+
+            elif selected == "Genetic Algorithm":
+                local_search = Local_search.LocalSearch(self.target)
+                result_temp = local_search.genetic_algorithm_rooks()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Local search")
+
+            elif selected == "Beam Search":
+                local_search = Local_search.LocalSearch(self.target)
+                result_temp = local_search.beam_search_rooks()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Local search")
+
+            elif selected == "Backtracking":
+                result_temp = Backtracking.solve_eight_rooks()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("CSP Algorithms")
+
+            elif selected == "Forward Checking":
+                result_temp = Forward_checking.solve_eight_rooks()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("CSP Algorithms")
+
+            elif selected == "AC-3":
+                ac3_solver = AC3RooksSolver()
+                result_temp = ac3_solver.solve()
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("CSP Algorithms")
+
+            elif selected == "AND-OR Tree Search":
+                result_temp = AND_OR_Search(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Complex Environment")
+
+            elif selected == "Partially Observable Search":
+                result_temp = Partially_Observable_Search(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Complex Environment")
+
+            elif selected == "Belief State Search":
+                result_temp = Belief_State_Search(self.target)
+                if result_temp:
+                    self.result = result_temp
+                self.category.set("Complex Environment")
+            else:
+                messagebox.showwarning("Warning", "Algorithm not implemented yet!")
+                return
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Error in {selected}: {str(e)}")
+            # Giữ giá trị mặc định của self.result
+
+        # Đảm bảo self.result có tất cả các trường cần thiết
+        self._ensure_result_fields()
 
         self.update_stats(self.result)
         self.update_algo_stats_from_result(self.category.get(), selected, self.result)
 
+    def _ensure_result_fields(self):
+        """Đảm bảo self.result có tất cả các trường cần thiết"""
+        if self.result is None:
+            self.result = {}
+
+        required_fields = {
+            "nodes_expanded": 0,
+            "max_frontier_size": 0,
+            "time": 0.0,
+            "path": [],
+            "solution": None,
+            "success": False
+        }
+
+        for field, default_value in required_fields.items():
+            if field not in self.result:
+                self.result[field] = default_value
+
     def update_stats(self, result):
+        """SỬA LỖI: Sử dụng .get() để tránh lỗi"""
+        # Đảm bảo result không None
+        if result is None:
+            result = {
+                "nodes_expanded": 0,
+                "max_frontier_size": 0,
+                "time": 0.0,
+                "path": [],
+                "solution": None,
+                "success": False
+            }
+
         self.solution_path = result.get("path", [])
         self.nodes_expanded = result.get("nodes_expanded", 0)
         self.max_frontier_size = result.get("max_frontier_size", 0)
@@ -412,13 +535,15 @@ class EightRooks_GUI:
         if algorithm not in self.algo_stats[category]:
             print(f"[Warning] Algorithm '{algorithm}' not found in category '{category}'.")
             return
+
+        # Sử dụng .get() để tránh lỗi
         self.algo_stats[category][algorithm]["nodes_expanded"] = result.get("nodes_expanded", 0)
         self.algo_stats[category][algorithm]["max_frontier_size"] = result.get("max_frontier_size", 0)
         self.algo_stats[category][algorithm]["time"] = result.get("time", 0.0)
 
         print(f"[INFO] Updated stats for {algorithm} in {category}.")
 
-    #Chạy kết quả hiển thị lên frame_step
+    # Chạy kết quả hiển thị lên frame_step
     def run_solution(self):
         if not self.solution_path:
             messagebox.showwarning("No solution", "Please click 'Solve' before running.")
@@ -439,10 +564,11 @@ class EightRooks_GUI:
             self.running = False
             self.draw_step()
 
-    #Dừng in các thông tin trên frame_step
+    # Dừng in các thông tin trên frame_step
     def stop_solution(self):
         self.running = False
-#Reset lại canvas_step
+
+    # Reset lại canvas_step
     def reset(self):
         # Reset logic variables
         self.solution_path = []
@@ -460,7 +586,7 @@ class EightRooks_GUI:
         self.draw_rooks(self.canvas_target_state, self.target)
 
         # Cập nhật label bước
-        self.label_pos_step.config(text="Step: 0/0")
+        self.label_pos_step.config(text="Position: None")
         self.label_step.config(text="Step: 0/0")
 
         # Reset bảng thống kê
@@ -476,34 +602,35 @@ class EightRooks_GUI:
         # Cập nhật thông tin khác nếu có
         self.update_pos_info()
 
-    #Hiển thị toàn bộ bước đi
-    def show_all_steps(self):
-        pass
 
-#điều khiển hiển thị thông tin step
+    # điều khiển hiển thị thông tin step
     def go_first_step(self):
         if not self.solution_path:
             return
         self.current_step = 0
         self.draw_step()
+
     def go_previous_step(self):
         if not self.solution_path:
             return
         if self.current_step > 0:
             self.current_step -= 1
             self.draw_step()
+
     def go_next_step(self):
         if not self.solution_path:
             return
         if self.current_step < len(self.solution_path) - 1:
             self.current_step += 1
             self.draw_step()
+
     def go_last_step(self):
         if not self.solution_path:
             return
         self.current_step = len(self.solution_path) - 1
         self.draw_step()
-#cập nhật thông tin vị trí
+
+    # cập nhật thông tin vị trí
     def update_pos_info(self):
         self.label_pos_target_state.config(text=self.get_positions_text(self.target))
         # Current Step
@@ -511,12 +638,13 @@ class EightRooks_GUI:
             current_board = self.solution_path[self.current_step]
             self.label_pos_step.config(text=self.get_positions_text(current_board))
         else:
-            self.label_pos_step.config(text="Positions: None")
-#cập nhật giá trị bước
+            self.label_pos_step.config(text="Position: None")
+
+    # cập nhật giá trị bước
     def update_step_label(self):
         self.label_step.config(text=f"Step: {self.current_step}/{self.total_steps}")
-        self.label_step.config(text=f"Step: {self.current_step}/{self.total_steps}")
-#vẽ bước sau khi chọn
+
+    # vẽ bước sau khi chọn
     def draw_step(self):
         if not self.solution_path:
             return
@@ -526,7 +654,7 @@ class EightRooks_GUI:
         self.update_step_label()
         self.update_pos_info()
 
-#chuyển vị trí quân xe sang dạng text
+    # chuyển vị trí quân xe sang dạng text
     def get_positions_text(self, board):
         positions = []
         for i in range(N):
@@ -537,10 +665,11 @@ class EightRooks_GUI:
                     positions.append(f"{col}{row}")
 
         if positions:
-            return "Positions: " + ", ".join(positions)
+            return "Position: " + ", ".join(positions)
         else:
-            return "Positions: None"
-#Cập nhật thông tin stats
+            return "Position: None"
+
+    # Cập nhật thông tin stats
     def update_result_stats(self, stats_data):
         self.stats_table.item("nodes", values=("Nodes Expanded", stats_data["nodes_expanded"]))
         self.stats_table.item("frontier", values=("Max Frontier Size", stats_data["max_frontier_size"]))
@@ -548,6 +677,7 @@ class EightRooks_GUI:
         self.stats_table.item("heuristic", values=("Heuristic h(x)", stats_data["heuristic"]))
         self.stats_table.item("cost", values=("Cost g(x)", stats_data["cost"]))
         self.stats_table.item("total_cost", values=("Total Cost f(x)", stats_data["total_cost"]))
+
 
 if __name__ == "__main__":
     window = tk.Tk()

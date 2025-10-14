@@ -121,9 +121,6 @@ def manhattan_chain_cost(board):
         r1, c1 = positions[i]
         r2, c2 = positions[i+1]
         cost += abs(r1 - r2) + abs(c1 - c2)
-    # Cộng 8 cho mỗi hàng chưa có Rook
-    missing_rows = N - len(rows_with_rook)
-    cost += 8 * missing_rows
     return cost
 
 

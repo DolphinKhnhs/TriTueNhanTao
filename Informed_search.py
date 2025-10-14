@@ -19,7 +19,6 @@ class State:
             node = node.parent
         return list(reversed(path))
 
-
 def manhattan_distance_rooks(board, target):
     N = len(board)
     distance = 0
@@ -29,7 +28,6 @@ def manhattan_distance_rooks(board, target):
             c_target = target[r].index(1)
             distance += abs(c_current - c_target)
     return distance
-
 
 def greedy_rooks(target):
     start_time = time.time()
