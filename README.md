@@ -217,9 +217,57 @@ P = e^{-\Delta E / T}
 
 ## SO SÁNH HIỆU SUẤT
 ### Thuật toán không có thông tin
-[
+- **BFS:** Dễ triển khai, đảm bảo tìm được lời giải tối ưu cho bài toán 8 rooks, nhưng tiêu tốn nhiều bộ nhớ khi không gian trạng thái lớn.
+- **DFS:** Tiết kiệm bộ nhớ hơn BFS, nhưng có thể dẫn đến lời giải không tối ưu hoặc rơi vào nhánh sai lâu.
+- **UCS:** Tìm được lời giải tối ưu nếu chi phí di chuyển đồng nhất, nhưng không hiệu quả khi không cần đánh giá chi phí.
+- **DLS:** Giới hạn độ sâu tìm kiếm giúp tránh lan rộng vô hạn, song có thể bỏ lỡ lời giải nếu đặt giới hạn chưa đủ.
+- **IDS:** Kết hợp ưu điểm của BFS và DFS, tìm được lời giải tối ưu với bộ nhớ nhỏ, tuy nhiên tốn thời gian do phải lặp lại các mức tìm kiếm trước đó.
+![uninformed](gif_baocao/uninformed.gif)
 ### Thuật toán có thông tin
+- **Greedy:** Tốc độ tìm kiếm nhanh trong bài toán 8 quân xe, nhưng có thể dừng ở nghiệm chưa tối ưu.
+- **A-star:** Kết hợp giữa tốc độ và tính tối ưu, hoạt động hiệu quả nhờ sử dụng hàm heuristic và chi phí thực tế là số lượng quân xe trên bàn cờ để định hướng tìm kiếm.
+![informed](gif_baocao/informed.gif)
 ### Thuật toán tìm kiếm cục bộ
+- **Hill Climbing:** Tìm kiếm nhanh nhưng dễ bị mắc kẹt ở cực tiểu cục bộ, không đảm bảo tìm được nghiệm tối ưu.
+- **Simulated Annealing:** Có khả năng thoát khỏi cực tiểu cục bộ nhờ chấp nhận tạm thời nghiệm kém hơn, giúp tăng cơ hội đạt nghiệm tối ưu toàn cục.
+- **Beam Search:** Giữ lại nhiều nhánh triển vọng cùng lúc, giảm nguy cơ mắc kẹt cục bộ, nhưng hiệu quả phụ thuộc vào giá trị beam width.
+- **Genetic Algorithm:** Dựa trên cơ chế tiến hóa tự nhiên, tạo ra thế hệ lời giải mới qua lai ghép và đột biến, có khả năng tìm được nghiệm tốt nhưng tốn thời gian tính toán.
+![local](gif_baocao/local.gif)
 ### Thuật toán tìm kiếm CSP
+- **Backtracking:** Thuật toán tìm kiếm quay lui, hoạt động nhanh trong không gian nhỏ nhưng không đảm bảo luôn tìm được lời giải tối ưu.
+- **Forward Checking:** Giúp giảm không gian tìm kiếm bằng cách loại bỏ sớm các giá trị không hợp lệ trong miền của biến liên quan, nhờ đó tránh được nhiều nhánh sai.
+- **AC3:** Thuật toán duy trì tính nhất quán cung, liên tục kiểm tra và loại bỏ các giá trị không thỏa ràng buộc giữa các biến, giúp tăng hiệu quả và giảm số nút cần mở rộng trong quá trình tìm kiếm.
+![CSP](gif_baocao/csp.gif)
 ### Thuật toán tìm kiếm trong môi trường phức tạp
+- **AND-OR Tree Search:** Có thể giải được bài toán nhưng tiêu tốn nhiều tài nguyên do tạo ra nhiều kế hoạch dư thừa.
+- **Partially Observable Search:** Không cần thiết vì trạng thái của bài toán luôn được quan sát đầy đủ.
+- **Belief State Search:** Rất chậm và tốn bộ nhớ vì không có yếu tố không chắc chắn cần xử lý.
+![complex_env](gif_baocao/complex_env.gif)
 
+## Đồ họa
+- Khởi động trò chơi
+```
+ui.py
+```
+### Tính năng
+- Hiển thị trạng thái mục tiêu (trừ csp)
+- Hiển thị các bước đặt quân cờ, các nút điều khiển step
+- Danh mục lựa chọn thuật toán
+- Bảng kết quả thuật toán
+- Các nút giải, xáo trộn, chạy, dừng và reset
+- Lựa chọn các nhóm thuật toán để vẽ biểu đồ
+## Kết luận
+- Qua quá trình triển khai và thử nghiệm các thuật toán tìm kiếm trên bài toán 8 quân xe, có thể thấy mỗi thuật toán đều có ưu và nhược điểm riêng.
+- Các thuật toán tìm kiếm mù như BFS, DFS, UCS, DLS, IDS hoạt động hiệu quả với không gian trạng thái nhỏ nhưng tiêu tốn nhiều tài nguyên khi mở rộng.
+- Các thuật toán tìm kiếm có thông tin như Greedy, A*, Hill Climbing, Simulated Annealing, Beam Search, và Genetic Algorithm cho thấy khả năng cải thiện tốc độ và tối ưu hóa tìm kiếm, đặc biệt khi được hỗ trợ bởi hàm heuristic phù hợp.
+- Các phương pháp như Backtracking, Forward Checking, và AC3 góp phần giảm đáng kể số trạng thái cần xem xét, giúp nâng cao hiệu quả giải bài toán ràng buộc.
+- Tuy nhiên, một số phương pháp nâng cao như AND-OR Tree Search, Partially Observable Search, hay Belief State Search ít phù hợp do đặc tính trạng thái rõ ràng và không có yếu tố bất định.
+## Hướng phát triển
+- Tối ưu và kết hợp các thuật toán heuristic nhằm đạt hiệu suất cao hơn.
+- Ứng dụng giao diện trực quan (visualization) để minh họa quá trình tìm kiếm của từng thuật toán.
+- Nghiên cứu và áp dụng các thuật toán học máy hoặc tìm kiếm tiến hóa để giải quyết các biến thể phức tạp hơn của bài toán.
+
+## Tài liệu tham khảo
+1. Russell, S. J., & Norvig, P. (2020). Artificial Intelligence: A Modern Approach (4th Edition). Pearson.
+2. Poole, D. L., & Mackworth, A. K. (2017). Artificial Intelligence: Foundations of Computational Agents (2nd Edition). Cambridge University Press.
+3. Nilsson, N. J. (1998). Artificial Intelligence: A New Synthesis. Morgan Kaufmann Publishers.
