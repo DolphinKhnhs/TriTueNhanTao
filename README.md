@@ -174,14 +174,14 @@ Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
 - **Nhược điểm:** Phải duyệt lại nhiều lần các nút ở độ sâu nhỏ hơn.
 
 ### Thuật toán tìm kiếm có thông tin
-#### 1. Tìm Kiếm Tham Lam (Greedy Best-First Search)
+#### Tìm Kiếm Tham Lam (Greedy Best-First Search)
 - **Nguyên lý:** Thuật toán sử dụng hàm heuristic h(n) để ước lượng khoảng cách từ trạng thái hiện tại đến đích và luôn chọn mở rộng trạng thái có giá trị heuristic nhỏ nhất (priority queue).
 - **Công thức đánh giá:**  
 > f(n) = h(n)
 - **Ưu điểm:** Tốc độ nhanh, mở rộng ít trạng thái hơn trong nhiều trường hợp. Hiệu quả cao khi hàm heuristic được thiết kế tốt.  
 - **Nhược điểm:** Không đảm bảo tìm được lời giải tối ưu, vì bỏ qua chi phí thực tế.  
 
-#### 2. Tìm kiếm A* (A* Search)
+#### Tìm kiếm A* (A* Search)
 - **Nguyên lý:** Tổng chi phí thực tế từ điểm bắt đầu đến nút hiện tại g(n) và ước lượng chi phí từ nút hiện tại đến đích(h(n).  
 - Thuật toán mở rộng các nút có giá trị nhỏ nhất trong hàng đợi ưu tiên (priority queue).  
 > f(n) = g(n) + h(n)  
@@ -189,12 +189,12 @@ Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
 - **Nhược điểm:** Tốn nhiều bộ nhớ, do phải lưu toàn bộ các nút đã mở rộng.  Phụ thuộc vào chất lượng của hàm heuristic.
 
 ### Thuật toán tìm kiếm cục bộ
-#### 1. Thuật Toán Leo Đồi (Hill Climbing)
+#### Thuật Toán Leo Đồi (Hill Climbing)
 - **Nguyên lý:** Bắt đầu từ một trạng thái ban đầu và liên tục di chuyển sang trạng thái lân cận tốt hơn dựa trên giá trị của hàm đánh giá (heuristic).  
 - **Ưu điểm:** Hiệu quả với không gian trạng thái lớn (không cần duyệt toàn bộ).  
 - **Nhược điểm:** Có thể mắc kẹt tại cực đại cục bộ (local maximum). Không đảm bảo tìm được nghiệm tối ưu toàn cục.
 
-#### 2. Tìm Kiếm Tôi Luyện Mô Phỏng (Simulated Annealing)
+#### Tìm Kiếm Tôi Luyện Mô Phỏng (Simulated Annealing)
 **Nguyên lý:** Thuật toán mô phỏng quá trình tôi luyện kim loại, bắt đầu với nhiệt độ cao
 (cho phép chấp nhận các trạng thái kém hơn) và giảm dần nhiệt độ theo thời gian. Khi nhiệt độ cao, thuật toán có thể chấp nhận bước di chuyển tệ hơn để thoát khỏi cực trị cục bộ. Khi nhiệt độ giảm, thuật toán chỉ chấp nhận các bước cải thiện.
 - **Công thức xác suất chấp nhận bước tệ hơn:**  
@@ -208,12 +208,12 @@ P = e^{-\Delta E / T}
 - **Ưu điểm:** Có khả năng thoát khỏi cực trị cục bộ mà Hill Climbing mắc phải. Thường tìm được lời giải tốt hơn Hill Climbing trong không gian trạng thái lớn.
 - **Nhược điểm:** Tốc độ chậm hơn các thuật toán, kết quả phụ thuộc mạnh vào các tham số.
 
-#### 3. Tìm Kiếm Beam (Beam Search)
+#### Tìm Kiếm Beam (Beam Search)
 - **Nguyên lý:** Beam Search là biến thể của Breadth-First Search nhưng giới hạn số lượng trạng thái mở rộng tại mỗi mức (beam width = k). Thuật toán chỉ giữ k trạng thái tốt nhất theo hàm heuristic tại mỗi bước. Các trạng thái còn lại bị loại bỏ
 - **Ưu điểm:** Giảm đáng kể bộ nhớ và số trạng thái cần xét so với BFS, giảm nguy cơ kẹt trong local maximum. Hiệu quả với không gian trạng thái lớn.   
 - **Nhược điểm:**  Không đảm bảo tìm được lời giải tối ưu, vì các trạng thái tốt có thể bị loại bỏ sớm.  
 
-#### 4. Thuật Toán Di Truyền (Genetic Algorithm – GA)
+#### Thuật Toán Di Truyền (Genetic Algorithm – GA)
 - **Nguyên lý:** Genetic Algorithm mô phỏng quá trình tiến hóa sinh học để tìm lời giải tối ưu.
   1. **Khởi tạo**: Tạo quần thể ban đầu gồm nhiều cá thể (trạng thái khả thi).  
   2. **Đánh giá**: Sử dụng **hàm fitness** để đánh giá chất lượng từng cá thể.  
@@ -225,33 +225,33 @@ P = e^{-\Delta E / T}
 - **Nhược điểm:**  tham số kích thước quần thể, xác suất crossover, mutation rate, số thế hệ cần phù hợp. Tốn thời gian cho các quần thể lớn.  
 
 ### Thuật toán tìm kiếm trong môi trường phức tạp
-#### 1. And-Or Search
+#### And-Or Search
 - **Nguyên lý:** And-Or Search được sử dụng trong môi trường không chắc chắn hoặc **có hành động kết hợp (and/or). **OR nodes**: Chọn một trong các hành động khả thi để đạt mục tiêu. **AND nodes**: Tất cả các hành động con đều phải thành công để đạt mục tiêu.   
 - **Ưu điểm:** Thích hợp cho **môi trường có nhiều kết quả ngẫu nhiên** (stochastic environment).  
 - **Nhược điểm:** Tốn bộ nhớ và thời gian khi không gian trạng thái lớn.
 - 
-#### 2. Belief State Search
+#### Belief State Search
 - **Nguyên lý:** Belief State Search được dùng khi môi trường không chắc chắn hoặc thông tin bị giới hạn. Thuật toán lưu tập hợp các trạng thái có thể xảy ra (belief state). Khi thực hiện một hành động, belief state được cập nhật. Thuật toán mở rộng tập hợp các belief state để tìm kiếm trạng thái mục tiêu.
 - **Ưu điểm:** Thích hợp cho môi trường không quan sát được thông tin. 
 - **Nhược điểm:**  Không gian belief state rất lớn, tốn bộ nhớ và thời gian. Cần cập nhật belief state sau mỗi hành động.
 - 
-#### 3. Partially Observable Search
+#### Partially Observable Search
 - **Nguyên lý:** Partially Observable Search được sử dụng khi môi trường chỉ quan sát được một phần thông tin (partial observability). Trạng thái thực tế có thể không biết đầy đủ. Thuật toán duy trì tập hợp các trạng thái belief states dựa trên thông tin được biết một phần.
 - **Ưu điểm:** Phù hợp cho môi trường thông tin không đầy đủ.
 - **Nhược điểm:** Tốn bộ nhớ và tài nguyên tính toán do phải quản lý tập hợp các trạng thái belief state.
 
 ### Bài toán thỏa mãn ràng buộc (Constraint Satisfaction Problem)
-#### 1. Quay Lui (Backtracking)
+#### Quay Lui (Backtracking)
 - **Nguyên lý:** Duyệt không gian trạng thái theo chiều sâu, gán giá trị cho từng biến. Khi một ràng buộc bị vi phạm, thuật toán quay lui (backtrack) để thử giá trị khác.  
 - **Ưu điểm:** Dễ cài đặt.     
 - **Nhược điểm:** Khi không gian trạng thái lớn thì tốn nhiều bộ nhớ và thời gian.
 - 
-#### 2. Forward Checking
+#### Forward Checking
 - **Nguyên lý:** Khi gán giá trị cho một biến, thuật toán kiểm tra trước (forward) các biến chưa gán, loại bỏ các giá trị trong miền của biến còn lại mà **sẽ gây vi phạm ràng buộc**. Nếu một biến chưa gán không còn giá trị hợp lệ, thuật toán quay lui ngay thay vì tiếp tục duyệt sâu.  
 - **Ưu điểm:** Giảm số nhánh phải thử so với Backtracking. Phát hiện vi phạm ràng buộc giúp giảm thời gian  
 - **Nhược điểm:** Cần tính toán và cập nhật miền giá trị liên tục
 - 
-#### 3. Arc Consistency (AC-3)
+#### Arc Consistency (AC-3)
 - **Nguyên lý:** Mỗi arc (Xi, Xj) được coi là consistent nếu mọi giá trị của Xi có ít nhất một giá trị hợp lệ tương ứng trong Xj.
   - Thuật toán lặp đi lặp lại:  
     1. Lấy một arc (Xi, Xj) từ hàng đợi.  
