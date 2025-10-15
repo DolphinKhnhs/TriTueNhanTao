@@ -24,7 +24,7 @@
 
 - [THUẬT TOÁN](#thuật-toán)
   - [Thuật toán tìm kiếm không có thông tin](#thuật-toán-tìm-kiếm-không-có-thông-tin)
-    - [Tìm kiếm theo chiều rộng (BFS)](#tìm-kiếm-theo-chiều-rộng-bfs-1)
+    - [Tìm kiếm theo chiều rộng (BFS)](#tìm-kiếm-theo-chiều-rộng-bfs)
     - [Thuật toán tìm kiếm theo chiều sâu (DFS)](#thuật-toán-tìm-kiếm-theo-chiều-sâu-dfs)
     - [Tìm Kiếm Chi Phí Đồng Nhất (UCS)](#tìm-kiếm-chi-phí-đồng-nhất-ucs)
     - [Tìm Kiếm Giới Hạn Độ Sâu (DLS)](#tìm-kiếm-giới-hạn-độ-sâu-dls)
@@ -148,27 +148,27 @@ Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
 
 ## THUẬT TOÁN
 ### Thuật toán tìm kiếm không có thông tin
-#### 1. Tìm kiếm theo chiều rộng (BFS) 
+#### Tìm kiếm theo chiều rộng (BFS) 
 - **Nguyên lý:** Duyệt theo tầng — mở rộng tất cả trạng thái ở độ sâu hiện tại trước khi sang tầng sau, dùng hàng đợi (queue).
 - **Ưu điểm:** Tìm được lời giải tối ưu (nếu có). Đảm bảo tìm thấy lời giải nếu tồn tại.
 - **Nhược điểm**: Tốn bộ nhớ
 
-#### 2. Thuật toán tìm kiếm theo chiều sâu (DFS)
+#### Thuật toán tìm kiếm theo chiều sâu (DFS)
 - **Nguyên lý:** Duyệt theo nhánh mở rộng một trạng thái đến độ sâu có thể trước khi quay lui. Sử dụng ngăn xếp (stack) để lưu trữ trạng thái.
 - **Ưu điểm:**: Ít tốn bộ nhớ hơn so với BFS.    
 - **Nhược điểm:** Có thể rơi vào vòng lặp hoặc đi sâu vào nhánh sai. Không đảm bảo tìm được lời giải tối ưu.
 
-#### 3. Tìm Kiếm Chi Phí Đồng Nhất (UCS)
+#### Tìm Kiếm Chi Phí Đồng Nhất (UCS)
 - **Nguyên lý:** Thuật toán luôn mở rộng trạng thái có chi phí đường đi nhỏ nhất từ trạng thái ban đầu. Sử dụng hàng đợi ưu tiên (priority queue) để chọn nút có tổng chi phí thấp nhất.
 - **Ưu điểm:**  Đảm bảo tìm được đường đi tối ưu nếu tất cả chi phí là dương. Hoạt động tốt cho các bài toán có trọng số khác nhau giữa các bước di chuyển.  
 - **Nhược điểm:**  Tốc độ chậm nếu không có giới hạn chi phí hoặc đồ thị quá lớn. Cần sử dụng nhiều bộ nhớ để lưu hàng đợi ưu tiên.
 
-#### 4. Tìm Kiếm Giới Hạn Độ Sâu (DLS)
+#### Tìm Kiếm Giới Hạn Độ Sâu (DLS)
 - **Nguyên lý:** Là biến thể của DFS, nhưng đặt một giới hạn độ sâu (limit) để tránh việc thuật toán đi quá sâu vào nhánh vô hạn. Khi đạt tới giới hạn này, thuật toán quay lui (backtrack) mà không mở rộng thêm.
 - **Ưu điểm:** Tránh rơi vào vòng lặp vô hạn như DFS thông thường. Tiết kiệm bộ nhớ.  
 - **Nhược điểm:** Có thể bỏ sót lời giải nếu giới hạn độ sâu nhỏ hơn độ sâu thực tế của lời giải.  
 
-#### 5. Tìm Kiếm Sâu Lặp (Iterative Deepening Search – IDS)
+#### Tìm Kiếm Sâu Lặp (Iterative Deepening Search – IDS)
 - **Nguyên lý:** Là sự kết hợp giữa DFS và BFS. Sử dụng DLS (Depth-Limited Search) làm hàm con. Thuật toán thực hiện tìm kiếm giới hạn độ sâu (DLS) nhiều lần, mỗi lần tăng giới hạn độ sâu thêm 1, cho đến khi tìm được lời giải. 
 - **Ưu điểm:** Sẽ tìm thấy lời giải nếu tồn tại. Đảm bảo lời giải tối ưu khi chi phí giữa các bước là bằng nhau. Tiết kiệm bộ nhớ hơn BFS. Tránh vòng lặp vô hạn như DFS.  
 - **Nhược điểm:** Phải duyệt lại nhiều lần các nút ở độ sâu nhỏ hơn.
