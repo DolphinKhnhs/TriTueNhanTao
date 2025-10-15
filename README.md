@@ -11,7 +11,38 @@
 - **MSSV:** 23110112
 
 ## MỤC LỤC
-  
+  - [Thông tin](#thông-tin)
+  - [Vấn đề](#vấn-đề)
+  - [Cơ sở lý thuyết](#cơ-sở-lý-thuyết)
+    - [Bài toán 8 quân xe](#bài-toán-8-quân-xe)
+    - [Cấu trúc đồ án](#cấu-trúc-đồ-án)
+    - [Công nghệ được sử dụng trong đồ án](#công-nghệ-được-sử-dụng-trong-đồ-án)
+    - [Các thuật toán tìm kiếm](#các-thuật-toán-tìm-kiếm)
+  - [Thuật toán](#thuật-toán)
+    - [Thuật toán tìm kiếm không có thông tin](#thuật-toán-tìm-kiếm-không-có-thông-tin)
+      - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
+      - [Depth-First Search (DFS)](#depth-first-search-dfs)
+      - [Uniform Cost Search (UCS)](#uniform-cost-search-ucs)
+    - [Thuật toán tìm kiếm có thông tin](#thuật-toán-tìm-kiếm-có-thông-tin)
+      - [Greedy Best-First Search](#greedy-best-first-search)
+      - [A-Star Search (A*)](#a-star-search-a)
+    - [Thuật toán tìm kiếm cục bộ](#thuật-toán-tìm-kiếm-cục-bộ)
+      - [Hill Climbing](#hill-climbing)
+      - [Simulated Annealing](#simulated-annealing)
+    - [Thuật toán tìm kiếm trong môi trường phức tạp](#thuật-toán-tìm-kiếm-trong-môi-trường-phức-tạp)
+      - [AND-OR Search](#and-or-search)
+      - [Minimax](#minimax)
+      - [Alpha-Beta Pruning](#alpha-beta-pruning)
+    - [Bài toán thỏa mãn ràng buộc (CSP)](#bài-toán-thỏa-mãn-ràng-buộc-csp)
+      - [Backtracking Search](#backtracking-search)
+      - [Forward Checking](#forward-checking)
+  - [Các hàm tính chi phí](#các-hàm-tính-chi-phí)
+  - [So sánh hiệu suất](#so-sánh-hiệu-suất)
+  - [Khởi động trò chơi](#khởi-động-trò-chơi)
+  - [Kết luận](#kết-luận)
+  - [Hướng phát triển](#hướng-phát-triển)
+  - [Tài liệu tham khảo](#tài-liệu-tham-khảo)
+
 ## VẤN ĐỀ
 1. Bối cảnh:
 Bài toán 8 quân xe là một biến thể đơn giản hơn của bài toán kinh điển “8 quân hậu” trong lĩnh vực Trí tuệ nhân tạo (AI) và Bài toán thỏa mãn ràng buộc (CSP – Constraint Satisfaction Problem).
