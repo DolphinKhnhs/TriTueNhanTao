@@ -13,7 +13,7 @@
 ## MỤC LỤC
 
 - [VẤN ĐỀ](#vấn-đề)
-  - [Bối cảnh](#bối-cảnh)
+  - [1. Bối cảnh](#bối-cảnh)
   - [Mục tiêu](#mục-tiêu)
 
 - [CƠ SỞ LÝ THUYẾT](#cơ-sở-lý-thuyết)
@@ -66,14 +66,11 @@
 - [HƯỚNG PHÁT TRIỂN](#hướng-phát-triển)
 - [TÀI LIỆU THAM KHẢO](#tài-liệu-tham-khảo)
 
-
-
 ## VẤN ĐỀ
-1. Bối cảnh:
+### Bối cảnh:
 Bài toán 8 quân xe là một biến thể đơn giản hơn của bài toán kinh điển “8 quân hậu” trong lĩnh vực Trí tuệ nhân tạo (AI) và Bài toán thỏa mãn ràng buộc (CSP – Constraint Satisfaction Problem).
 Trên bàn cờ vua kích thước 8×8, ta cần đặt 8 quân xe sao cho không có hai quân xe nào tấn công lẫn nhau.
-
-2. Mục tiêu:
+### Mục tiêu:
 - Ứng dụng các thuật toán tìm kiếm trong AI
 - So sánh hiệu suất các thuật toán
 - Xây dựng giao diện minh họa
