@@ -11,7 +11,7 @@
 - **MSSV:** 23110112
 
 ## MỤC LỤC
-``nhớ điền``
+  
 ## VẤN ĐỀ
 1. Bối cảnh:
 Bài toán 8 quân xe là một biến thể đơn giản hơn của bài toán kinh điển “8 quân hậu” trong lĩnh vực Trí tuệ nhân tạo (AI) và Bài toán thỏa mãn ràng buộc (CSP – Constraint Satisfaction Problem).
@@ -26,8 +26,7 @@ Trên bàn cờ vua kích thước 8×8, ta cần đặt 8 quân xe sao cho khô
 ## CƠ SỞ LÝ THUYẾT
 ### BÀI TOÁN 8 QUÂN XE
 Bài toán 8 quân xe là một ma trận 2D kích thước 8x8. Mục tiêu đặt các quân xe sao cho không có quân xe nào tấn công lẫn nhau.
-
-**Trạng thái đích**
+**Ví dụ 1 trạng thái đích**
 ```
 #example
 . R . . . . . .
@@ -62,18 +61,20 @@ R . . . . . . .
 - 40,320 trạng thái **hoàn chỉnh** (đặt đủ 8 quân).  
 - 69,281 trạng thái **chưa đủ** (đặt từ 0 → 7 quân).  
 
-### CÁC THUẬT TOÁN TÌM KIẾM
-Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
-1. **Thuật toán tìm kiếm không có thông tin (Uninformed Search)**: Không sử dụng thông tin bổ sung về trạng thái để hướng dẫn quá trình tìm kiếm, chỉ dựa trên cấu trúc đồ thị trạng thái và mục tiêu.
-2. **Thuật toán tìm kiếm có thông tin (Informed Search)**: Sử dụng hàm heuristic(h) để ước lượng chi phí đến mục tiêu, giúp tìm kiếm hiệu quả hơn, trên mục tiêu tìm kiếm theo hướng hứa hẹn nhất.
-3. **Thuật toán tìm kiếm cục bộ (Local Search)**: Các thuật toán chỉ quan tâm đến trạng thái hiện tại (tùy bài toán) thay vì duyệt toàn bộ cây tìm kiếm
-4. **Thuật toán thỏa mãn ràng buộc (CSP)**: Tìm giá trị cho các biến sao cho tất cả ràng buộc đều được thỏa mãn.
-5. **Thuật toán cho môi trường phức tạp**: Từ môi trường phức tạp/không chắc chắn tìm kiếm lời giải cho bài toán
-
 ### Cấu trúc đồ án
-`nhớ điền`
+- `_pycache`
+- `gif_baocao`: chứa file gif báo báo cá nhân
+- `CSP.py`: chứa thuật toán Constraint Satisfaction Problem
+- `Informed_search.py`: chứa thuật toán tìm kiếm có thông tin
+- `Local_search`: thuật toán tìm kiếm cục bộ
+- `Uninformed_search.py`: Thuật toán tìm kiếm không có thông tin
+- `complex_env.py`: thuật toán tìm kiếm trong môi trường phức tạp
+- `ui.py`: chứa giao diện
+
 ### Công nghệ được sử dụng trong đồ án
 - **Ngôn ngữ lập trình:** Python 3.12.5
+- **IDE:** Pycharm community edition 2025.2.1.1
+- **Github:** Lưu trữ mã nguồnnguồn
 - **Thư viện giao diện đồ họa:** tkinter
 - **Thư viện hỗ trợ:**
   - `copy` – hỗ trợ sao chép đối tượng (deep copy)  
@@ -83,6 +84,14 @@ Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
   - `heapq` – cài đặt hàng đợi ưu tiên (priority queue) bằng heap  
   - `itertools` – cung cấp công cụ tạo tổ hợp, hoán vị, lặp vô hạn  
   - `math` – hỗ trợ các hàm toán học
+
+### CÁC THUẬT TOÁN TÌM KIẾM
+Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
+1. **Thuật toán tìm kiếm không có thông tin (Uninformed Search)**: Không sử dụng thông tin bổ sung về trạng thái để hướng dẫn quá trình tìm kiếm, chỉ dựa trên cấu trúc đồ thị trạng thái và mục tiêu.
+2. **Thuật toán tìm kiếm có thông tin (Informed Search)**: Sử dụng hàm heuristic(h) để ước lượng chi phí đến mục tiêu, giúp tìm kiếm hiệu quả hơn, trên mục tiêu tìm kiếm theo hướng hứa hẹn nhất.
+3. **Thuật toán tìm kiếm cục bộ (Local Search)**: Các thuật toán chỉ quan tâm đến trạng thái hiện tại (tùy bài toán) thay vì duyệt toàn bộ cây tìm kiếm
+4. **Thuật toán thỏa mãn ràng buộc (CSP)**: Tìm giá trị cho các biến sao cho tất cả ràng buộc đều được thỏa mãn.
+5. **Thuật toán cho môi trường phức tạp**: Từ môi trường phức tạp/không chắc chắn tìm kiếm lời giải cho bài toán
 
 ## THUẬT TOÁN
 ### Thuật toán tìm kiếm không có thông tin
@@ -244,8 +253,7 @@ P = e^{-\Delta E / T}
 - **Belief State Search:** Rất chậm và tốn bộ nhớ vì không có yếu tố không chắc chắn cần xử lý.
 ![complex_env](gif_baocao/complex_env.gif)
 
-## Đồ họa
-- Khởi động trò chơi
+## Khởi động trò chơi
 ```
 ui.py
 ```
