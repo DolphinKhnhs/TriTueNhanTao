@@ -151,7 +151,7 @@ Các thuật toán tìm kiếm được phân loại thành các nhóm chính:
 
 ## THUẬT TOÁN
 ### Thuật toán tìm kiếm không có thông tin
-#### 1. Tìm kiếm theo chiều rộng (BFS): 
+#### 1. Tìm kiếm theo chiều rộng (BFS) 
 - **Nguyên lý:** Duyệt theo tầng — mở rộng tất cả trạng thái ở độ sâu hiện tại trước khi sang tầng sau, dùng hàng đợi (queue).
 - **Ưu điểm:** Tìm được lời giải tối ưu (nếu có). Đảm bảo tìm thấy lời giải nếu tồn tại.
 - **Nhược điểm**: Tốn bộ nhớ
