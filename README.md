@@ -11,37 +11,59 @@
 - **MSSV:** 23110112
 
 ## MỤC LỤC
-  - [Thông tin](#thông-tin)
-  - [Vấn đề](#vấn-đề)
-  - [Cơ sở lý thuyết](#cơ-sở-lý-thuyết)
-    - [Bài toán 8 quân xe](#bài-toán-8-quân-xe)
-    - [Cấu trúc đồ án](#cấu-trúc-đồ-án)
-    - [Công nghệ được sử dụng trong đồ án](#công-nghệ-được-sử-dụng-trong-đồ-án)
-    - [Các thuật toán tìm kiếm](#các-thuật-toán-tìm-kiếm)
-  - [Thuật toán](#thuật-toán)
-    - [Thuật toán tìm kiếm không có thông tin](#thuật-toán-tìm-kiếm-không-có-thông-tin)
-      - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
-      - [Depth-First Search (DFS)](#depth-first-search-dfs)
-      - [Uniform Cost Search (UCS)](#uniform-cost-search-ucs)
-    - [Thuật toán tìm kiếm có thông tin](#thuật-toán-tìm-kiếm-có-thông-tin)
-      - [Greedy Best-First Search](#greedy-best-first-search)
-      - [A-Star Search (A*)](#a-star-search-a)
-    - [Thuật toán tìm kiếm cục bộ](#thuật-toán-tìm-kiếm-cục-bộ)
-      - [Hill Climbing](#hill-climbing)
-      - [Simulated Annealing](#simulated-annealing)
-    - [Thuật toán tìm kiếm trong môi trường phức tạp](#thuật-toán-tìm-kiếm-trong-môi-trường-phức-tạp)
-      - [AND-OR Search](#and-or-search)
-      - [Minimax](#minimax)
-      - [Alpha-Beta Pruning](#alpha-beta-pruning)
-    - [Bài toán thỏa mãn ràng buộc (CSP)](#bài-toán-thỏa-mãn-ràng-buộc-csp)
-      - [Backtracking Search](#backtracking-search)
-      - [Forward Checking](#forward-checking)
-  - [Các hàm tính chi phí](#các-hàm-tính-chi-phí)
-  - [So sánh hiệu suất](#so-sánh-hiệu-suất)
-  - [Khởi động trò chơi](#khởi-động-trò-chơi)
-  - [Kết luận](#kết-luận)
-  - [Hướng phát triển](#hướng-phát-triển)
-  - [Tài liệu tham khảo](#tài-liệu-tham-khảo)
+### [VẤN ĐỀ](#vấn-đề)
+- [Bối cảnh](#bối-cảnh)
+- [Mục tiêu](#mục-tiêu)
+
+### [CƠ SỞ LÝ THUYẾT](#cơ-sở-lý-thuyết)
+- [Bài toán 8 quân xe](#bài-toán-8-quân-xe)
+- [Cấu trúc đồ án](#cấu-trúc-đồ-án)
+- [Công nghệ được sử dụng trong đồ án](#công-nghệ-được-sử-dụng-trong-đồ-án)
+- [Các thuật toán tìm kiếm](#các-thuật-toán-tìm-kiếm)
+
+### [THUẬT TOÁN](#thuật-toán)
+#### [Thuật toán tìm kiếm không có thông tin](#thuật-toán-tìm-kiếm-không-có-thông-tin)
+- [Tìm kiếm theo chiều rộng (BFS)](#tìm-kiếm-theo-chiều-rộng-bfs)
+- [Thuật toán tìm kiếm theo chiều sâu (DFS)](#thuật-toán-tìm-kiếm-theo-chiều-sâu-dfs)
+- [Tìm Kiếm Chi Phí Đồng Nhất (UCS)](#tìm-kiếm-chi-phí-đồng-nhất-ucs)
+- [Tìm Kiếm Giới Hạn Độ Sâu (DLS)](#tìm-kiếm-giới-hạn-độ-sâu-dls)
+- [Tìm Kiếm Sâu Lặp (IDS)](#tìm-kiếm-sâu-lặp-ids)
+
+#### [Thuật toán tìm kiếm có thông tin](#thuật-toán-tìm-kiếm-có-thông-tin)
+- [Tìm Kiếm Tham Lam (Greedy)](#tìm-kiếm-tham-lam-greedy)
+- [Tìm kiếm A* (A* Search)](#tìm-kiếm-a-a-search)
+
+#### [Thuật toán tìm kiếm cục bộ](#thuật-toán-tìm-kiếm-cục-bộ)
+- [Thuật Toán Leo Đồi (Hill Climbing)](#thuật-toán-leo-đồi-hill-climbing)
+- [Tìm Kiếm Tôi Luyện Mô Phỏng (Simulated Annealing)](#tìm-kiếm-tôi-luyện-mô-phỏng-simulated-annealing)
+- [Tìm Kiếm Beam (Beam Search)](#tìm-kiếm-beam-beam-search)
+- [Thuật Toán Di Truyền (GA)](#thuật-toán-di-truyền-ga)
+
+#### [Thuật toán tìm kiếm trong môi trường phức tạp](#thuật-toán-tìm-kiếm-trong-môi-trường-phức-tạp)
+- [And-Or Search](#and-or-search)
+- [Belief State Search](#belief-state-search)
+- [Partially Observable Search](#partially-observable-search)
+
+#### [Bài toán thỏa mãn ràng buộc (CSP)](#bài-toán-thỏa-mãn-ràng-buộc-csp)
+- [Quay Lui (Backtracking)](#quay-lui-backtracking)
+- [Forward Checking](#forward-checking)
+- [Arc Consistency (AC-3)](#arc-consistency-ac-3)
+
+### [CÁC HÀM TÍNH CHI PHÍ](#các-hàm-tính-chi-phí)
+- [Hàm đánh giá chi phí thực tế](#hàm-đánh-giá-chi-phí-thực-tế)
+- [Hàm đánh giá khoảng cách](#hàm-đánh-giá-khoảng-cách)
+
+### [SO SÁNH HIỆU SUẤT](#so-sánh-hiệu-suất)
+- [Thuật toán không có thông tin](#thuật-toán-không-có-thông-tin)
+- [Thuật toán có thông tin](#thuật-toán-có-thông-tin)
+- [Thuật toán tìm kiếm cục bộ](#thuật-toán-tìm-kiếm-cục-bộ-1)
+- [Thuật toán tìm kiếm CSP](#thuật-toán-tìm-kiếm-csp)
+- [Thuật toán tìm kiếm trong môi trường phức tạp](#thuật-toán-tìm-kiếm-trong-môi-trường-phức-tạp-1)
+
+### [KHỞI ĐỘNG TRÒ CHƠI](#khởi-động-trò-chơi)
+### [KẾT LUẬN](#kết-luận)
+### [HƯỚNG PHÁT TRIỂN](#hướng-phát-triển)
+### [TÀI LIỆU THAM KHẢO](#tài-liệu-tham-khảo)
 
 ## VẤN ĐỀ
 1. Bối cảnh:
@@ -285,22 +307,31 @@ P = e^{-\Delta E / T}
 ![complex_env](gif_baocao/complex_env.gif)
 
 ## Khởi động trò chơi
-```
-ui.py
-```
+- Chạy trực tiếp file 
+```ui.py```
+
 ### Tính năng
-- Hiển thị trạng thái mục tiêu (trừ csp)
-- Hiển thị các bước đặt quân cờ, các nút điều khiển step
-- Danh mục lựa chọn thuật toán
-- Bảng kết quả thuật toán
-- Các nút giải, xáo trộn, chạy, dừng và reset
-- Lựa chọn các nhóm thuật toán để vẽ biểu đồ
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d4ee6bff-d87d-4d1f-ad48-967d1d1a5f84" />
+
+- Rooks board: Hiển thị trạng thái mục tiêu và vị trí các quân cờ
+- Step Visualization: Hiển thị các bước đặt quân cờ. Bên dưới có các nút điều khiển hiển thị trước hoặc sau 
+- Algorithm Selection: Lựa chọn thuật toán để chạy
+- Result (Stats): Hiển thị thông tin thuật toán sau khi hoàn thành
+- Các nút điều khiển:
+  - Shuffle: Trộn các quân cờ mục tiêu
+  - Solve: Giải dùng thuật toán tìm trạng thái mục tiêu
+  - Run: Chạy hiển thị (Step Visualization)
+  - Stop: Ngừng hiển thị (Step Visualization)
+  - Reset: Xóa hiển thị trên (Step Visualization)
+- Chart: Chọn nhóm thuật toán và nhấn view chart để hiển thị thông tin so sánh
+
 ## Kết luận
 - Qua quá trình triển khai và thử nghiệm các thuật toán tìm kiếm trên bài toán 8 quân xe, có thể thấy mỗi thuật toán đều có ưu và nhược điểm riêng.
 - Các thuật toán tìm kiếm mù như BFS, DFS, UCS, DLS, IDS hoạt động hiệu quả với không gian trạng thái nhỏ nhưng tiêu tốn nhiều tài nguyên khi mở rộng.
 - Các thuật toán tìm kiếm có thông tin như Greedy, A*, Hill Climbing, Simulated Annealing, Beam Search, và Genetic Algorithm cho thấy khả năng cải thiện tốc độ và tối ưu hóa tìm kiếm, đặc biệt khi được hỗ trợ bởi hàm heuristic phù hợp.
 - Các phương pháp như Backtracking, Forward Checking, và AC3 góp phần giảm đáng kể số trạng thái cần xem xét, giúp nâng cao hiệu quả giải bài toán ràng buộc.
 - Tuy nhiên, một số phương pháp nâng cao như AND-OR Tree Search, Partially Observable Search, hay Belief State Search ít phù hợp do đặc tính trạng thái rõ ràng và không có yếu tố bất định.
+
 ## Hướng phát triển
 - Tối ưu và kết hợp các thuật toán heuristic nhằm đạt hiệu suất cao hơn.
 - Ứng dụng giao diện trực quan (visualization) để minh họa quá trình tìm kiếm của từng thuật toán.
