@@ -261,14 +261,16 @@ P = e^{-\Delta E / T}
 - **Nhược điểm:**  AC-3 không đảm bảo tìm lời giải, chỉ lọc giá trị không hợp lệ.  
 
 ## CÁC HÀM TÍNH CHI PHÍ
-### Hàm đánh giá chi phí thực tế: `manhattan_chain_cost(board)`
+### Hàm đánh giá chi phí thực tế
+`manhattan_chain_cost(board)`
 1. Lấy danh sách các quân Rook trên bàn cờ (board), đồng thời ghi nhận các hàng đã có quân.  
 2. Tính tổng khoảng cách Manhattan giữa các quân Rook theo thứ tự xuất hiện:  
    \[
    \text{cost} = \sum_{i=1}^{k-1} \big( |r_i - r_{i+1}| + |c_i - c_{i+1}| \big)
    \]  
    với \( (r_i, c_i) \) là tọa độ quân thứ i.
-### Hàm đánh giá khoảng cách: `manhattan_distance_rooks(board, target)`
+### Hàm đánh giá khoảng cách
+`manhattan_distance_rooks(board, target)`
 1. Duyệt từng **hàng của bàn cờ**.  
 2. Nếu hàng có quân Rook, lấy **cột hiện tại** và **cột mục tiêu**.  
 3. Tính khoảng cách Manhattan trên hàng so với mục tiêu:  
