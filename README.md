@@ -24,7 +24,7 @@
 
 - [THUẬT TOÁN](#thuật-toán)
   - [Thuật toán tìm kiếm không có thông tin](#thuật-toán-tìm-kiếm-không-có-thông-tin)
-    - [1. Tìm kiếm theo chiều rộng (BFS)](#tìm-kiếm-theo-chiều-rộng-bfs)
+    - [Tìm kiếm theo chiều rộng (BFS)](#tìm-kiếm-theo-chiều-rộng-bfs-1)
     - [Thuật toán tìm kiếm theo chiều sâu (DFS)](#thuật-toán-tìm-kiếm-theo-chiều-sâu-dfs)
     - [Tìm Kiếm Chi Phí Đồng Nhất (UCS)](#tìm-kiếm-chi-phí-đồng-nhất-ucs)
     - [Tìm Kiếm Giới Hạn Độ Sâu (DLS)](#tìm-kiếm-giới-hạn-độ-sâu-dls)
